@@ -1,0 +1,117 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client ***REMOVED***
+***REMOVED***provider = "prisma-client-js"
+***REMOVED***
+
+datasource db ***REMOVED***
+***REMOVED***provider = "mysql"
+***REMOVED***url***REMOVED******REMOVED******REMOVED***= env("DATABASE_URL")
+***REMOVED***
+
+// User schema
+model User ***REMOVED***
+***REMOVED***id***REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED***@id @default(uuid())
+***REMOVED***email***REMOVED******REMOVED*** String***REMOVED******REMOVED***@unique
+***REMOVED***name***REMOVED******REMOVED******REMOVED***String
+***REMOVED***password***REMOVED***String
+***REMOVED***createdAt DateTime***REMOVED***@default(now())
+***REMOVED***updatedAt DateTime***REMOVED***@updatedAt
+***REMOVED***admin***REMOVED******REMOVED*** Admin[]
+***REMOVED***checker***REMOVED*** Checker[]
+***REMOVED***peoples***REMOVED*** Peoples[]
+***REMOVED***manager***REMOVED*** Manager[]
+***REMOVED***
+
+// Admin creates organizations, add users and assigns roles to users like people, manager, checker
+model Admin ***REMOVED***
+***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [uid], references: [id])
+***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
+***REMOVED***organizationId String
+
+***REMOVED***@@id([uid, organizationId])
+***REMOVED***
+
+// Manager can approve the token request
+model Manager ***REMOVED***
+***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [uid], references: [id])
+***REMOVED***organization***REMOVED*** Organization***REMOVED*** @relation(fields: [organizationId], references: [id])
+***REMOVED***organizationId String
+***REMOVED***TokenManager***REMOVED*** TokenManager[]
+
+***REMOVED***@@id([uid, organizationId])
+***REMOVED***
+
+// Checker can check the token status and check entry and exit
+model Checker ***REMOVED***
+***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [uid], references: [id])
+***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
+***REMOVED***organizationId String
+
+***REMOVED***@@id([uid, organizationId])
+***REMOVED***
+
+// Organization schema
+model Organization ***REMOVED***
+***REMOVED***id***REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED***@id @default(uuid())
+***REMOVED***name***REMOVED******REMOVED******REMOVED***String
+***REMOVED***createdAt DateTime***REMOVED***@default(now())
+***REMOVED***updatedAt DateTime***REMOVED***@updatedAt
+***REMOVED***peoples***REMOVED*** Peoples[]
+***REMOVED***admin***REMOVED******REMOVED*** Admin[]
+***REMOVED***checker***REMOVED*** Checker[]
+***REMOVED***Manager***REMOVED*** Manager[]
+***REMOVED***
+
+// Students schema
+model Peoples ***REMOVED***
+***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [uid], references: [id])
+***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
+***REMOVED***organizationId String
+
+***REMOVED***token Token[]
+
+***REMOVED***@@id([uid, organizationId])
+***REMOVED***
+
+// Token Status
+enum TokenStatus ***REMOVED***
+***REMOVED***REQUESTED
+***REMOVED***ISSUED
+***REMOVED***REJECTED
+***REMOVED***EXPIRED
+***REMOVED***IN_USE
+***REMOVED***
+
+model Token ***REMOVED***
+***REMOVED***token***REMOVED******REMOVED*** String***REMOVED*** @id @default(uuid())
+***REMOVED***createdAt DateTime @default(now())
+***REMOVED***updatedAt DateTime @updatedAt
+
+***REMOVED***issuedBy***REMOVED******REMOVED******REMOVED*** Peoples***REMOVED******REMOVED*** @relation(fields: [issuedById, organizationId], references: [uid, organizationId])
+***REMOVED***issuedById***REMOVED******REMOVED*** String
+***REMOVED***organizationId String
+***REMOVED***status***REMOVED******REMOVED******REMOVED******REMOVED*** TokenStatus
+
+***REMOVED***startTime DateTime
+***REMOVED***endTime***REMOVED*** DateTime
+
+***REMOVED***tokenManager TokenManager[]
+***REMOVED***
+
+// to Store which token is given to which manager to approve
+model TokenManager ***REMOVED***
+***REMOVED***token***REMOVED*** Token***REMOVED***@relation(fields: [tokenId], references: [token])
+***REMOVED***tokenId String
+
+***REMOVED***manager***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** Manager @relation(fields: [managerUid, managerOrganizationId], references: [uid, organizationId])
+***REMOVED***managerUid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***managerOrganizationId String
+
+***REMOVED***@@id([tokenId])
+***REMOVED***

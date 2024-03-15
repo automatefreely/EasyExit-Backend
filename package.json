@@ -1,0 +1,15 @@
+***REMOVED***
+***REMOVED***"name": "backend",
+***REMOVED***"version": "1.0.0",
+***REMOVED***"description": "",
+***REMOVED***"main": "index.js",
+***REMOVED***"scripts": ***REMOVED***
+***REMOVED******REMOVED***"test": "echo \"Error: no test specified\" && exit 1"
+***REMOVED******REMOVED***,
+***REMOVED***"keywords": [],
+***REMOVED***"author": "",
+***REMOVED***"license": "ISC",
+***REMOVED***"devDependencies": ***REMOVED***
+***REMOVED******REMOVED***"prisma": "^5.9.1"
+***REMOVED******REMOVED***
+***REMOVED***

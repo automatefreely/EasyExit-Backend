@@ -37,10 +37,11 @@ model Admin ***REMOVED***
 // Manager can approve the token request
 model Manager ***REMOVED***
 ***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
-***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [uid], references: [id])
-***REMOVED***organization***REMOVED*** Organization***REMOVED*** @relation(fields: [organizationId], references: [id])
+***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [uid], references: [id])
+***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
 ***REMOVED***organizationId String
-***REMOVED***TokenManager***REMOVED*** TokenManager[]
+
+***REMOVED***token Token[]
 
 ***REMOVED***@@id([uid, organizationId])
 ***REMOVED***
@@ -51,6 +52,8 @@ model Checker ***REMOVED***
 ***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [uid], references: [id])
 ***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
 ***REMOVED***organizationId String
+
+***REMOVED***token Token[]
 
 ***REMOVED***@@id([uid, organizationId])
 ***REMOVED***
@@ -86,10 +89,15 @@ enum TokenStatus ***REMOVED***
 ***REMOVED***REJECTED
 ***REMOVED***EXPIRED
 ***REMOVED***IN_USE
+***REMOVED***RETURNED_BEFORE_ISSUED
+***REMOVED***RETURNED_AFTER_ISSUED
+***REMOVED***LATE
 ***REMOVED***
 
 model Token ***REMOVED***
-***REMOVED***token***REMOVED******REMOVED*** String***REMOVED*** @id @default(uuid())
+***REMOVED***token***REMOVED***String @id @default(uuid())
+***REMOVED***reason String
+
 ***REMOVED***createdAt DateTime @default(now())
 ***REMOVED***updatedAt DateTime @updatedAt
 
@@ -101,17 +109,24 @@ model Token ***REMOVED***
 ***REMOVED***startTime DateTime
 ***REMOVED***endTime***REMOVED*** DateTime
 
-***REMOVED***tokenManager TokenManager[]
+***REMOVED***acceptedTime***REMOVED***DateTime
+***REMOVED***acceptedBy***REMOVED******REMOVED***Manager***REMOVED***@relation(fields: [acceptedByUid, organizationId], references: [uid, organizationId])
+***REMOVED***acceptedByUid String
+
+***REMOVED***exitTime***REMOVED******REMOVED*** DateTime
+***REMOVED***returnedTime DateTime
+
+***REMOVED***checkedBy***REMOVED******REMOVED***Checker @relation(fields: [checkedByUid, organizationId], references: [uid, organizationId])
+***REMOVED***checkedByUid String
+
+***REMOVED***lateEntry lateEntry[]
 ***REMOVED***
 
-// to Store which token is given to which manager to approve
-model TokenManager ***REMOVED***
-***REMOVED***token***REMOVED*** Token***REMOVED***@relation(fields: [tokenId], references: [token])
-***REMOVED***tokenId String
+model lateEntry ***REMOVED***
+***REMOVED***referedToken***REMOVED******REMOVED******REMOVED***Token***REMOVED******REMOVED***@relation(fields: [token], references: [token])
+***REMOVED***token***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** String***REMOVED*** @id
+***REMOVED***exceptedEntryTime DateTime
 
-***REMOVED***manager***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** Manager @relation(fields: [managerUid, managerOrganizationId], references: [uid, organizationId])
-***REMOVED***managerUid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
-***REMOVED***managerOrganizationId String
-
-***REMOVED***@@id([tokenId])
+***REMOVED***reason***REMOVED******REMOVED***String
+***REMOVED***createdAt DateTime @default(now())
 ***REMOVED***

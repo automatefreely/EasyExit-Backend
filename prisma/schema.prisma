@@ -6,59 +6,63 @@ generator client ***REMOVED***
 ***REMOVED***
 
 datasource db ***REMOVED***
-***REMOVED***provider = "mysql"
-***REMOVED***url***REMOVED******REMOVED******REMOVED***= env("DATABASE_URL")
+***REMOVED***provider***REMOVED******REMOVED*** = "mysql"
+***REMOVED***url***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***= env("DATABASE_URL")
+***REMOVED***relationMode = "prisma"
 ***REMOVED***
 
-// User schema
+/// User schema
 model User ***REMOVED***
 ***REMOVED***id***REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED***@id @default(uuid())
 ***REMOVED***email***REMOVED******REMOVED*** String***REMOVED******REMOVED***@unique
-***REMOVED***name***REMOVED******REMOVED******REMOVED***String
-***REMOVED***password***REMOVED***String
+***REMOVED***name***REMOVED******REMOVED******REMOVED***String?
+***REMOVED***password***REMOVED***String?
 ***REMOVED***createdAt DateTime***REMOVED***@default(now())
 ***REMOVED***updatedAt DateTime***REMOVED***@updatedAt
-***REMOVED***admin***REMOVED******REMOVED*** Admin[]
-***REMOVED***checker***REMOVED*** Checker[]
-***REMOVED***peoples***REMOVED*** Peoples[]
-***REMOVED***manager***REMOVED*** Manager[]
+***REMOVED***admin***REMOVED******REMOVED*** Admin?
+***REMOVED***checker***REMOVED*** Checker?
+***REMOVED***peoples***REMOVED*** Peoples?
+***REMOVED***manager***REMOVED*** Manager?
 ***REMOVED***
 
-// Admin creates organizations, add users and assigns roles to users like people, manager, checker
+/// Admin creates organizations, add users and assigns roles to users like people, manager, checker
 model Admin ***REMOVED***
-***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
 ***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [uid], references: [id])
 ***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
 ***REMOVED***organizationId String
 
-***REMOVED***@@id([uid, organizationId])
+***REMOVED***@@index([uid])
+***REMOVED***@@index([organizationId])
 ***REMOVED***
 
-// Manager can approve the token request
+/// Manager can approve the token request
 model Manager ***REMOVED***
-***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
 ***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [uid], references: [id])
 ***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
 ***REMOVED***organizationId String
 
 ***REMOVED***token Token[]
 
-***REMOVED***@@id([uid, organizationId])
+***REMOVED***@@index([uid])
+***REMOVED***@@index([organizationId])
 ***REMOVED***
 
-// Checker can check the token status and check entry and exit
+/// Checker can check the token status and check entry and exit
 model Checker ***REMOVED***
-***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
 ***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [uid], references: [id])
 ***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
 ***REMOVED***organizationId String
 
 ***REMOVED***token Token[]
 
-***REMOVED***@@id([uid, organizationId])
+***REMOVED***@@index([uid])
+***REMOVED***@@index([organizationId])
 ***REMOVED***
 
-// Organization schema
+/// Organization schema
 model Organization ***REMOVED***
 ***REMOVED***id***REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED***@id @default(uuid())
 ***REMOVED***name***REMOVED******REMOVED******REMOVED***String
@@ -68,25 +72,31 @@ model Organization ***REMOVED***
 ***REMOVED***admin***REMOVED******REMOVED*** Admin[]
 ***REMOVED***checker***REMOVED*** Checker[]
 ***REMOVED***Manager***REMOVED*** Manager[]
+***REMOVED***unrestrictedStartTime DateTime @db.Time()
+***REMOVED***unrestrictedEndTime DateTime @db.Time()
+
+***REMOVED***@@index([id, name])
 ***REMOVED***
 
-// Students schema
+/// Students schema
 model Peoples ***REMOVED***
 ***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [uid], references: [id])
-***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***uid***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
 ***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
 ***REMOVED***organizationId String
 
 ***REMOVED***token Token[]
 
-***REMOVED***@@id([uid, organizationId])
+***REMOVED***@@index([organizationId])
+***REMOVED***@@index([uid])
 ***REMOVED***
 
-// Token Status
+/// Token Status
 enum TokenStatus ***REMOVED***
 ***REMOVED***REQUESTED
 ***REMOVED***ISSUED
 ***REMOVED***REJECTED
+***REMOVED***// When user is not late and returned
 ***REMOVED***EXPIRED
 ***REMOVED***IN_USE
 ***REMOVED***RETURNED_BEFORE_ISSUED
@@ -94,6 +104,7 @@ enum TokenStatus ***REMOVED***
 ***REMOVED***LATE
 ***REMOVED***
 
+/// Token schema
 model Token ***REMOVED***
 ***REMOVED***token***REMOVED***String @id @default(uuid())
 ***REMOVED***reason String
@@ -101,32 +112,40 @@ model Token ***REMOVED***
 ***REMOVED***createdAt DateTime @default(now())
 ***REMOVED***updatedAt DateTime @updatedAt
 
-***REMOVED***issuedBy***REMOVED******REMOVED******REMOVED*** Peoples***REMOVED******REMOVED*** @relation(fields: [issuedById, organizationId], references: [uid, organizationId])
+***REMOVED***issuedBy***REMOVED******REMOVED******REMOVED*** Peoples***REMOVED******REMOVED*** @relation(fields: [issuedById], references: [uid])
 ***REMOVED***issuedById***REMOVED******REMOVED*** String
 ***REMOVED***organizationId String
-***REMOVED***status***REMOVED******REMOVED******REMOVED******REMOVED*** TokenStatus
+***REMOVED***status***REMOVED******REMOVED******REMOVED******REMOVED*** TokenStatus @default(REQUESTED)
 
 ***REMOVED***startTime DateTime
 ***REMOVED***endTime***REMOVED*** DateTime
 
 ***REMOVED***acceptedTime***REMOVED***DateTime
-***REMOVED***acceptedBy***REMOVED******REMOVED***Manager***REMOVED***@relation(fields: [acceptedByUid, organizationId], references: [uid, organizationId])
+***REMOVED***acceptedBy***REMOVED******REMOVED***Manager? @relation(fields: [acceptedByUid], references: [uid])
 ***REMOVED***acceptedByUid String
 
 ***REMOVED***exitTime***REMOVED******REMOVED*** DateTime
 ***REMOVED***returnedTime DateTime
 
-***REMOVED***checkedBy***REMOVED******REMOVED***Checker @relation(fields: [checkedByUid, organizationId], references: [uid, organizationId])
+***REMOVED***checkedBy***REMOVED******REMOVED***Checker? @relation(fields: [checkedByUid], references: [uid])
 ***REMOVED***checkedByUid String
 
-***REMOVED***lateEntry lateEntry[]
+***REMOVED***lateEntry lateEntry?
+
+***REMOVED***@@index([token])
+***REMOVED***@@index([issuedById, organizationId])
+***REMOVED***@@index([acceptedByUid, organizationId])
+***REMOVED***@@index([checkedByUid, organizationId])
 ***REMOVED***
 
+/// Late Entry
 model lateEntry ***REMOVED***
 ***REMOVED***referedToken***REMOVED******REMOVED******REMOVED***Token***REMOVED******REMOVED***@relation(fields: [token], references: [token])
 ***REMOVED***token***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** String***REMOVED*** @id
-***REMOVED***exceptedEntryTime DateTime
+***REMOVED***expectedEntryTime DateTime
 
 ***REMOVED***reason***REMOVED******REMOVED***String
 ***REMOVED***createdAt DateTime @default(now())
+
+***REMOVED***@@index([token])
 ***REMOVED***

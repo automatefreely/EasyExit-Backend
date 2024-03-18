@@ -9,7 +9,7 @@ import ***REMOVED***
 ***REMOVED******REMOVED***response_404,
 ***REMOVED******REMOVED***response_500
 ***REMOVED*** from '../utils/responseCodes.js';
-import role from '../utils/role.js';
+import userRole from '../utils/role.js';
 
 export async function login(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
@@ -91,7 +91,7 @@ export async function adminRegister(req, res) ***REMOVED***
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***const payLoad = ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: role.admin
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: userRole.admin
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***;
 ***REMOVED******REMOVED******REMOVED******REMOVED***const token = jwt.sign(payLoad, process.env.JWT_SECRET);
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'User has been Registered', ***REMOVED***
@@ -135,7 +135,70 @@ export async function peoplesRegister(req, res) ***REMOVED***
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***const payLoad = ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: role.peoples
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: userRole.peoples
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***;
+***REMOVED******REMOVED******REMOVED******REMOVED***const token = jwt.sign(payLoad, process.env.JWT_SECRET);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'User has been Registered', ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: name,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***console.log(error);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Error in Registering', error);
+***REMOVED******REMOVED******REMOVED***
+***REMOVED***
+
+export async function validate(req, res) ***REMOVED***
+***REMOVED******REMOVED***try ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, organizationId, role ***REMOVED*** = req.body;
+
+***REMOVED******REMOVED******REMOVED******REMOVED***if (role != 'manager' && role != 'checker') ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Not a valid role for validation');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+
+***REMOVED******REMOVED******REMOVED******REMOVED***const existingSupervisor = await prisma[role].findUnique(***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: organizationId,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED***if (existingSupervisor) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'validated for organization', ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: role
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** else ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Not registered for organization');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***console.log(error);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Error in Validating', error);
+***REMOVED******REMOVED******REMOVED***
+***REMOVED***
+
+export async function supervisorRegister(req, res) ***REMOVED***
+***REMOVED******REMOVED***try ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, role ***REMOVED*** = req.body;
+
+***REMOVED******REMOVED******REMOVED******REMOVED***if (!(role in userRole)) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Not a valid Role');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***const hashedPassword = await hash(password, 10);
+
+***REMOVED******REMOVED******REMOVED******REMOVED***await prisma.user.update(***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***data: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: name,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password: hashedPassword
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+
+***REMOVED******REMOVED******REMOVED******REMOVED***const payLoad = ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: role
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***;
 ***REMOVED******REMOVED******REMOVED******REMOVED***const token = jwt.sign(payLoad, process.env.JWT_SECRET);
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'User has been Registered', ***REMOVED***

@@ -2,14 +2,29 @@
 ***REMOVED***"name": "backend",
 ***REMOVED***"version": "1.0.0",
 ***REMOVED***"description": "",
-***REMOVED***"main": "index.js",
+***REMOVED***"main": "app.js",
 ***REMOVED***"scripts": ***REMOVED***
-***REMOVED******REMOVED***"test": "echo \"Error: no test specified\" && exit 1"
+***REMOVED******REMOVED***"start": "node app.js",
+***REMOVED******REMOVED***"dev": "nodemon app.js",
+***REMOVED******REMOVED***"test": "echo \"Error: no test specified\" && exit 1",
+***REMOVED******REMOVED***"prettier": "prettier --write \"src/*\"",
+***REMOVED******REMOVED***"pushdb": "prisma db push",
+***REMOVED******REMOVED***"pulldb": "prisma db pull"
 ***REMOVED******REMOVED***,
 ***REMOVED***"keywords": [],
 ***REMOVED***"author": "",
 ***REMOVED***"license": "ISC",
 ***REMOVED***"devDependencies": ***REMOVED***
-***REMOVED******REMOVED***"prisma": "^5.9.1"
+***REMOVED******REMOVED***"nodemon": "^3.1.0",
+***REMOVED******REMOVED***"prettier": "^3.2.5",
+***REMOVED******REMOVED***"prisma": "^5.11.0"
+***REMOVED******REMOVED***,
+***REMOVED***"dependencies": ***REMOVED***
+***REMOVED******REMOVED***"@prisma/client": "^5.11.0",
+***REMOVED******REMOVED***"axios": "^1.6.8",
+***REMOVED******REMOVED***"cors": "^2.8.5",
+***REMOVED******REMOVED***"dotenv": "^16.4.5",
+***REMOVED******REMOVED***"express": "^4.18.3",
+***REMOVED******REMOVED***"jsonwebtoken": "^9.0.2"
 ***REMOVED******REMOVED***
 ***REMOVED***

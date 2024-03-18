@@ -13,12 +13,12 @@ datasource db ***REMOVED***
 
 /// User schema
 model User ***REMOVED***
-***REMOVED***id***REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED***@id @default(uuid())
-***REMOVED***email***REMOVED******REMOVED*** String***REMOVED******REMOVED***@unique
+***REMOVED***id***REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED*** @id @default(uuid())
+***REMOVED***email***REMOVED******REMOVED*** String***REMOVED*** @unique
 ***REMOVED***name***REMOVED******REMOVED******REMOVED***String?
 ***REMOVED***password***REMOVED***String?
-***REMOVED***createdAt DateTime***REMOVED***@default(now())
-***REMOVED***updatedAt DateTime***REMOVED***@updatedAt
+***REMOVED***createdAt DateTime @default(now())
+***REMOVED***updatedAt DateTime @updatedAt
 ***REMOVED***admin***REMOVED******REMOVED*** Admin?
 ***REMOVED***checker***REMOVED*** Checker?
 ***REMOVED***peoples***REMOVED*** Peoples?
@@ -64,16 +64,16 @@ model Checker ***REMOVED***
 
 /// Organization schema
 model Organization ***REMOVED***
-***REMOVED***id***REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED***@id @default(uuid())
-***REMOVED***name***REMOVED******REMOVED******REMOVED***String
-***REMOVED***createdAt DateTime***REMOVED***@default(now())
-***REMOVED***updatedAt DateTime***REMOVED***@updatedAt
-***REMOVED***peoples***REMOVED*** Peoples[]
-***REMOVED***admin***REMOVED******REMOVED*** Admin[]
-***REMOVED***checker***REMOVED*** Checker[]
-***REMOVED***Manager***REMOVED*** Manager[]
-***REMOVED***unrestrictedStartTime DateTime @db.Time()
-***REMOVED***unrestrictedEndTime DateTime @db.Time()
+***REMOVED***id***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED***@id @default(uuid())
+***REMOVED***name***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***createdAt***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** DateTime***REMOVED***@default(now())
+***REMOVED***updatedAt***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** DateTime***REMOVED***@updatedAt
+***REMOVED***peoples***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** Peoples[]
+***REMOVED***admin***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** Admin[]
+***REMOVED***checker***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** Checker[]
+***REMOVED***Manager***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** Manager[]
+***REMOVED***unrestrictedStartTime DateTime***REMOVED***@db.Time()
+***REMOVED***unrestrictedEndTime***REMOVED*** DateTime***REMOVED***@db.Time()
 
 ***REMOVED***@@index([id, name])
 ***REMOVED***

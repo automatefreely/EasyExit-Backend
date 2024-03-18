@@ -8,7 +8,7 @@
 ***REMOVED******REMOVED***"start": "node app.js",
 ***REMOVED******REMOVED***"dev": "nodemon app.js",
 ***REMOVED******REMOVED***"test": "echo \"Error: no test specified\" && exit 1",
-***REMOVED******REMOVED***"prettier": "prettier --write \"src/*\"",
+***REMOVED******REMOVED***"prettier": "prettier --write \"src/**/*.js\"",
 ***REMOVED******REMOVED***"pushdb": "prisma db push",
 ***REMOVED******REMOVED***"pulldb": "prisma db pull"
 ***REMOVED******REMOVED***,

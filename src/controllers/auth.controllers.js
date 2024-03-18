@@ -181,7 +181,7 @@ export async function supervisorRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, role ***REMOVED*** = req.body;
 
-***REMOVED******REMOVED******REMOVED******REMOVED***if (!(role in userRole)) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***if (!(role in userRole)) ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** // (Swaroop ) why userRole as it also contains people
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Not a valid Role');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const hashedPassword = await hash(password, 10);

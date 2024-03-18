@@ -123,11 +123,11 @@ model Token ***REMOVED***
 ***REMOVED***acceptedBy***REMOVED******REMOVED***Manager? @relation(fields: [acceptedByUid], references: [email])
 ***REMOVED***acceptedByUid String
 
-***REMOVED***exitTime***REMOVED******REMOVED*** DateTime
-***REMOVED***returnedTime DateTime
+***REMOVED***exitTime***REMOVED******REMOVED*** DateTime?
+***REMOVED***returnedTime DateTime?
 
 ***REMOVED***checkedBy***REMOVED******REMOVED***Checker? @relation(fields: [checkedByUid], references: [email])
-***REMOVED***checkedByUid String
+***REMOVED***checkedByUid String?
 
 ***REMOVED***lateEntry lateEntry?
 

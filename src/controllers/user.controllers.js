@@ -1,0 +1,37 @@
+import prisma from '../config/db.config';
+import ***REMOVED***
+***REMOVED******REMOVED***response_401,
+***REMOVED******REMOVED***response_200,
+***REMOVED******REMOVED***response_500
+***REMOVED*** from '../utils/responseCodes';
+import ROLE from '../utils/role';
+export async function requestToken(req, res) ***REMOVED***
+***REMOVED******REMOVED***try ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, organizationId, role ***REMOVED*** = req.user;
+***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED***reason, startTime, endTime ***REMOVED*** = req.body;
+
+***REMOVED******REMOVED******REMOVED******REMOVED***if (role !== ROLE.peoples) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_401(res, 'You are not authorized to request token');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+
+***REMOVED******REMOVED******REMOVED******REMOVED***const token = await prisma.token.create(***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***data: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***reason: reason,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***startTime: startTime,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***endTime: endTime,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: organizationId,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***issuedBy: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***connect: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***)
+***REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***console.error(error);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Server Error', error);
+***REMOVED******REMOVED******REMOVED***
+***REMOVED***
+
+export async function generatePassForVerification(req, res) ***REMOVED******REMOVED***

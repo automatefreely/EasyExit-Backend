@@ -44,7 +44,8 @@ export async function login(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const payLoad = ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: existingUser.email,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: req.body.role
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: req.body.role,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: existingUser.organizationId***REMOVED******REMOVED*** // (swaroop) check it
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***;
 ***REMOVED******REMOVED******REMOVED******REMOVED***const token = jwt.sign(payLoad, process.env.JWT_SECRET);
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'User has been logged In', ***REMOVED***

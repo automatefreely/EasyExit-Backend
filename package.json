@@ -3,6 +3,7 @@
 ***REMOVED***"version": "1.0.0",
 ***REMOVED***"description": "",
 ***REMOVED***"main": "app.js",
+***REMOVED***"type": "module",
 ***REMOVED***"scripts": ***REMOVED***
 ***REMOVED******REMOVED***"start": "node app.js",
 ***REMOVED******REMOVED***"dev": "nodemon app.js",
@@ -22,6 +23,7 @@
 ***REMOVED***"dependencies": ***REMOVED***
 ***REMOVED******REMOVED***"@prisma/client": "^5.11.0",
 ***REMOVED******REMOVED***"axios": "^1.6.8",
+***REMOVED******REMOVED***"bcrypt": "^5.1.1",
 ***REMOVED******REMOVED***"cors": "^2.8.5",
 ***REMOVED******REMOVED***"dotenv": "^16.4.5",
 ***REMOVED******REMOVED***"express": "^4.18.3",

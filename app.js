@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import router from './src/routes/v1/index.js';
-import ***REMOVED*** connDB ***REMOVED*** from './config/db.config.js';
+import router from './src/routes/index.js';
+import ***REMOVED*** connDB ***REMOVED*** from './src/config/db.config.js';
 
 dotenv.config();
 const app = express();

@@ -3,7 +3,7 @@ import userRole from '../utils/role.js';
 
 async function isAdmin(req, res, next) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***if (req.user.role == userRole.admin) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***if (req.user?.role == userRole.admin) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***next();
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** else ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_403(res, 'User not an admin');

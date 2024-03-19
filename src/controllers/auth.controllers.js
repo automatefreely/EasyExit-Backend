@@ -13,14 +13,18 @@ import userRole from '../utils/role.js';
 
 export async function login(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, password, role ***REMOVED*** = req.body;
+***REMOVED******REMOVED******REMOVED******REMOVED***if (!email || !password || !role) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res,'Fields missing, check documentation');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***!['peoples', 'admin', 'checker', 'manager'].includes(req.body.role)
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***!['peoples', 'admin', 'checker', 'manager'].includes(role)
 ***REMOVED******REMOVED******REMOVED******REMOVED***) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Unavailable Role');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***const existingUser = await prisma[req.body.role].findUnique(***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***const existingUser = await prisma[role].findUnique(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: req.body.email
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***user: ***REMOVED***
@@ -36,7 +40,7 @@ export async function login(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_404(res, 'User not found');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const matchPassword = await compare(
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***req.body.password,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***existingUser.user.password
 ***REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (!matchPassword) ***REMOVED***
@@ -44,8 +48,8 @@ export async function login(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const payLoad = ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: existingUser.email,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: req.body.role,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: existingUser.organizationId***REMOVED******REMOVED*** // (swaroop) check it
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: role,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: existingUser.organizationId
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***;
 ***REMOVED******REMOVED******REMOVED******REMOVED***const token = jwt.sign(payLoad, process.env.JWT_SECRET);
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'User has been logged In', ***REMOVED***

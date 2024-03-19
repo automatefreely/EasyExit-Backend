@@ -1,0 +1,146 @@
+***REMOVED***
+	"info": ***REMOVED***
+		"_postman_id": "2d5f0d21-e9cc-429f-ac8a-f003c2597bc3",
+		"name": "EasyExit",
+		"description": "API Documentation of SE Project termed as EasyExit: Hostel Outpass Management System",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "25553200",
+		"_collection_link": "https://se-project-iiita.postman.co/workspace/se-project-Workspace~3ffbdcc7-ed7d-44c9-8215-7c62ed24e48a/collection/26807057-2d5f0d21-e9cc-429f-ac8a-f003c2597bc3?action=share&source=collection_link&creator=25553200"
+	***REMOVED***,
+	"item": [
+		***REMOVED***
+			"name": "Auth",
+			"item": [
+				***REMOVED***
+					"name": "Register",
+					"item": [
+						***REMOVED***
+							"name": "Register Admin",
+							"request": ***REMOVED***
+								"method": "POST",
+								"header": [],
+								"body": ***REMOVED***
+									"mode": "raw",
+									"raw": "***REMOVED***\r\n***REMOVED******REMOVED***\"name\":\"Harshal\",\r\n***REMOVED******REMOVED***\"email\":\"harshal@gmail.com\",\r\n***REMOVED******REMOVED***\"password\":\"12345678\",\r\n***REMOVED******REMOVED***\"organizationName\":\"IIITA\"\r\n***REMOVED***",
+									"options": ***REMOVED***
+										"raw": ***REMOVED***
+											"language": "json"
+										***REMOVED***
+									***REMOVED***
+								***REMOVED***,
+								"url": "***REMOVED******REMOVED***baseURL***REMOVED******REMOVED***/auth/register/admin"
+							***REMOVED***,
+							"response": []
+						***REMOVED***,
+						***REMOVED***
+							"name": "peoples register",
+							"request": ***REMOVED***
+								"method": "POST",
+								"header": [],
+								"body": ***REMOVED***
+									"mode": "raw",
+									"raw": "***REMOVED***\r\n***REMOVED******REMOVED***\"email\":\"swarop@gmail.com\",\r\n***REMOVED******REMOVED***\"password\":\"12345678\",\r\n***REMOVED******REMOVED***\"name\": \"swaroop\",\r\n***REMOVED******REMOVED***\"organizationId\": \"b85d355d-c2f3-42fb-a015-961538f94713\"\r\n***REMOVED***",
+									"options": ***REMOVED***
+										"raw": ***REMOVED***
+											"language": "json"
+										***REMOVED***
+									***REMOVED***
+								***REMOVED***,
+								"url": "***REMOVED******REMOVED***baseURL***REMOVED******REMOVED***/auth/register/peoples"
+							***REMOVED***,
+							"response": []
+						***REMOVED***,
+						***REMOVED***
+							"name": "validate supervisor",
+							"request": ***REMOVED***
+								"method": "POST",
+								"header": [],
+								"body": ***REMOVED***
+									"mode": "raw",
+									"raw": "***REMOVED***\r\n***REMOVED******REMOVED***\"email\":\"checker@gmail.com\",\r\n***REMOVED******REMOVED***\"organizationId\":\"8bf0f35b-a913-482e-8e6e-fd0702e36a91\",\r\n***REMOVED******REMOVED***\"role\":\"checker\"\r\n***REMOVED***",
+									"options": ***REMOVED***
+										"raw": ***REMOVED***
+											"language": "json"
+										***REMOVED***
+									***REMOVED***
+								***REMOVED***,
+								"url": "***REMOVED******REMOVED***baseURL***REMOVED******REMOVED***/auth/validation"
+							***REMOVED***,
+							"response": []
+						***REMOVED***
+					],
+					"description": "`/register` Route"
+				***REMOVED***,
+				***REMOVED***
+					"name": "Login (Unified)",
+					"request": ***REMOVED***
+						"method": "POST",
+						"header": [],
+						"body": ***REMOVED***
+							"mode": "raw",
+							"raw": "***REMOVED***\r\n***REMOVED******REMOVED***\"email\":\"swarop@gmail.com\",\r\n***REMOVED******REMOVED***\"password\":\"12345678\",\r\n***REMOVED******REMOVED***\"role\": \"peoples\"\r\n***REMOVED***",
+							"options": ***REMOVED***
+								"raw": ***REMOVED***
+									"language": "json"
+								***REMOVED***
+							***REMOVED***
+						***REMOVED***,
+						"url": "***REMOVED******REMOVED***baseURL***REMOVED******REMOVED***/auth/login"
+					***REMOVED***,
+					"response": []
+				***REMOVED***
+			],
+			"description": "`/auth` Route"
+		***REMOVED***,
+		***REMOVED***
+			"name": "Admin",
+			"item": [
+				***REMOVED***
+					"name": "Add supervisors",
+					"request": ***REMOVED***
+						"method": "POST",
+						"header": [],
+						"body": ***REMOVED***
+							"mode": "raw",
+							"raw": "***REMOVED***\r\n***REMOVED******REMOVED***\"organizationId\": \"b85d355d-c2f3-42fb-a015-961538f94713\",\r\n***REMOVED******REMOVED***\"checkerEmails\": [\"rajeshaserr@x.com\", \"piyusrhsafer@y.com\"],\r\n***REMOVED******REMOVED***\"managerEmails\":[\"xsre@x.com\"]\r\n***REMOVED***",
+							"options": ***REMOVED***
+								"raw": ***REMOVED***
+									"language": "json"
+								***REMOVED***
+							***REMOVED***
+						***REMOVED***,
+						"url": "***REMOVED******REMOVED***baseURL***REMOVED******REMOVED***/admin/add/supervisors"
+					***REMOVED***,
+					"response": []
+				***REMOVED***
+			]
+		***REMOVED***
+	],
+	"event": [
+		***REMOVED***
+			"listen": "prerequest",
+			"script": ***REMOVED***
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			***REMOVED***
+		***REMOVED***,
+		***REMOVED***
+			"listen": "test",
+			"script": ***REMOVED***
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			***REMOVED***
+		***REMOVED***
+	],
+	"variable": [
+		***REMOVED***
+			"key": "baseURL",
+			"value": "http://localhost:4000/api",
+			"type": "string"
+		***REMOVED***
+	]
+***REMOVED***

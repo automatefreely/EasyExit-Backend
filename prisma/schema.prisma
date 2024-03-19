@@ -26,7 +26,7 @@ model User ***REMOVED***
 
 /// Admin creates organizations, add users and assigns roles to users like people, manager, checker
 model Admin ***REMOVED***
-***REMOVED***email***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
+***REMOVED***email***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
 ***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [email], references: [email])
 ***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
 ***REMOVED***organizationId String
@@ -37,7 +37,7 @@ model Admin ***REMOVED***
 
 /// Manager can approve the token request
 model Manager ***REMOVED***
-***REMOVED***email***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
+***REMOVED***email***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
 ***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [email], references: [email])
 ***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
 ***REMOVED***organizationId String
@@ -50,7 +50,7 @@ model Manager ***REMOVED***
 
 /// Checker can check the token status and check entry and exit
 model Checker ***REMOVED***
-***REMOVED***email***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
+***REMOVED***email***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
 ***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [email], references: [email])
 ***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
 ***REMOVED***organizationId String
@@ -71,8 +71,8 @@ model Organization ***REMOVED***
 ***REMOVED***admin***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** Admin[]
 ***REMOVED***checker***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** Checker[]
 ***REMOVED***Manager***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** Manager[]
-***REMOVED***unrestrictedStartTime DateTime***REMOVED***@db.Time() @default(dbgenerated("100000"))
-***REMOVED***unrestrictedEndTime***REMOVED*** DateTime***REMOVED***@db.Time() @default(dbgenerated("180000"))
+***REMOVED***unrestrictedStartTime DateTime***REMOVED***@default(dbgenerated("100000")) @db.Time()
+***REMOVED***unrestrictedEndTime***REMOVED*** DateTime***REMOVED***@default(dbgenerated("180000")) @db.Time()
 
 ***REMOVED***@@index([id, name])
 ***REMOVED***
@@ -80,7 +80,7 @@ model Organization ***REMOVED***
 /// Students schema
 model Peoples ***REMOVED***
 ***REMOVED***user***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** User***REMOVED******REMOVED******REMOVED******REMOVED*** @relation(fields: [email], references: [email])
-***REMOVED***email***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
+***REMOVED***email***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String***REMOVED******REMOVED******REMOVED*** @id
 ***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
 ***REMOVED***organizationId String
 
@@ -119,17 +119,20 @@ model Token ***REMOVED***
 ***REMOVED***startTime DateTime
 ***REMOVED***endTime***REMOVED*** DateTime
 
-***REMOVED***acceptedTime***REMOVED***DateTime
+***REMOVED***acceptedTime***REMOVED***DateTime?
 ***REMOVED***acceptedBy***REMOVED******REMOVED***Manager? @relation(fields: [acceptedByUid], references: [email])
-***REMOVED***acceptedByUid String
+***REMOVED***acceptedByUid String?
 
-***REMOVED***exitTime***REMOVED******REMOVED*** DateTime
-***REMOVED***returnedTime DateTime
+***REMOVED***exitTime***REMOVED******REMOVED*** DateTime?
+***REMOVED***returnedTime DateTime?
 
 ***REMOVED***checkedBy***REMOVED******REMOVED***Checker? @relation(fields: [checkedByUid], references: [email])
-***REMOVED***checkedByUid String
+***REMOVED***checkedByUid String?
 
 ***REMOVED***lateEntry lateEntry?
+
+***REMOVED***pass***REMOVED******REMOVED******REMOVED******REMOVED*** String?
+***REMOVED***passValidity DateTime? @db.Time()
 
 ***REMOVED***@@index([token])
 ***REMOVED***@@index([issuedById, organizationId])

@@ -61,7 +61,7 @@ export function response_500(res, log_message, err) ***REMOVED***
 
 ***REMOVED******REMOVED***return res.status(500).json(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***status: 'error',
-***REMOVED******REMOVED******REMOVED******REMOVED***error: `Something went wrong.\n$***REMOVED***message***REMOVED***`,
+***REMOVED******REMOVED******REMOVED******REMOVED***error: `$***REMOVED***message***REMOVED***`,
 ***REMOVED******REMOVED******REMOVED******REMOVED***message: 'Internal server error'
 ***REMOVED******REMOVED******REMOVED***);
 ***REMOVED***

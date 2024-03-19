@@ -61,6 +61,10 @@ export async function adminRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, organizationName ***REMOVED*** = req.body;
 
+***REMOVED******REMOVED******REMOVED******REMOVED***if (!email || !name || !password || !organizationName) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Feilds missing, check documentation');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+
 ***REMOVED******REMOVED******REMOVED******REMOVED***const existingUser = await prisma.user.findUnique(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
@@ -109,6 +113,10 @@ export async function peoplesRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, organizationId ***REMOVED*** = req.body;
 
+***REMOVED******REMOVED******REMOVED******REMOVED***if (!email || !name || !password || !organizationId) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Feilds missing, check documentation');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+
 ***REMOVED******REMOVED******REMOVED******REMOVED***const existingUser = await prisma.user.findUnique(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
@@ -153,7 +161,11 @@ export async function validate(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, organizationId, role ***REMOVED*** = req.body;
 
-***REMOVED******REMOVED******REMOVED******REMOVED***if (role != 'manager' && role != 'checker') ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***if (!email || !role || !organizationId) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Feilds missing, check documentation');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+
+***REMOVED******REMOVED******REMOVED******REMOVED***if (role != userRole.manager && role != userRole.checker) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Not a valid role for validation');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 
@@ -181,8 +193,15 @@ export async function supervisorRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, role ***REMOVED*** = req.body;
 
-***REMOVED******REMOVED******REMOVED******REMOVED***if (!(role in userRole)) ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Not a valid Role');
+***REMOVED******REMOVED******REMOVED******REMOVED***if (!email || !name || !password || !role) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Feilds missing, check documentation');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+
+***REMOVED******REMOVED******REMOVED******REMOVED***if (role != userRole.manager && role != userRole.checker) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***res,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***'Not a valid role for supervisor registration'
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const hashedPassword = await hash(password, 10);
 

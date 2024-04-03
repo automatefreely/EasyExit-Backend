@@ -1,9 +1,9 @@
-import prisma from '../config/db.config';
+import prisma from '../config/db.config.js';
 import ***REMOVED***
 ***REMOVED******REMOVED***response_200,
 ***REMOVED******REMOVED***response_400,
 ***REMOVED******REMOVED***response_500
-***REMOVED*** from '../utils/responseCodes';
+***REMOVED*** from '../utils/responseCodes.js';
 
 export async function acceptToken(req, res) ***REMOVED******REMOVED***
 

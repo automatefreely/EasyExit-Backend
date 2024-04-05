@@ -1,8 +1,12 @@
 import ***REMOVED*** Router ***REMOVED*** from 'express';
-import ***REMOVED*** addSupervisor ***REMOVED*** from '../controllers/admin.controllers.js';
+import ***REMOVED***
+***REMOVED******REMOVED***addSupervisor,
+***REMOVED******REMOVED***getSupervisor
+***REMOVED*** from '../controllers/admin.controllers.js';
 
 const adminRouter = Router();
 
-adminRouter.post('/add/supervisors', addSupervisor);
+adminRouter.post('/supervisors/add', addSupervisor);
+adminRouter.get('/supervisors',getSupervisor);
 
 export default adminRouter;

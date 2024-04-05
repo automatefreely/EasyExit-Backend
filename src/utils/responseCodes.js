@@ -30,6 +30,13 @@ export function response_400(res, message) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED***);
 ***REMOVED***
 
+export function response_304(res, message) ***REMOVED***
+***REMOVED******REMOVED***return res.status(304).json(***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***status: 'Not modified',
+***REMOVED******REMOVED******REMOVED******REMOVED***message
+***REMOVED******REMOVED******REMOVED***);
+***REMOVED***
+
 export function response_401(res, message) ***REMOVED***
 ***REMOVED******REMOVED***return res.status(401).json(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***status: 'error',

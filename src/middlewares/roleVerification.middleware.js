@@ -39,3 +39,16 @@ export async function isChecker(req, res, next) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Error while checking checker', error);
 ***REMOVED******REMOVED******REMOVED***
 ***REMOVED***
+
+export async function isPeoples(req, res, next) ***REMOVED***
+***REMOVED******REMOVED***try ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***if (req.user?.role == ROLE.peoples) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***next();
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** else ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_403(res, 'User access required');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***console.error(error);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Error while checking user', error);
+***REMOVED******REMOVED******REMOVED***
+***REMOVED***

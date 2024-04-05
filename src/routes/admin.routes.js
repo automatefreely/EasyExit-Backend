@@ -7,6 +7,6 @@ import ***REMOVED***
 const adminRouter = Router();
 
 adminRouter.post('/supervisors/add', addSupervisor);
-adminRouter.get('/supervisors',getSupervisor);
+adminRouter.get('/supervisors', getSupervisor);
 
 export default adminRouter;

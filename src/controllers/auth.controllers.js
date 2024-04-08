@@ -10,6 +10,8 @@ import ***REMOVED***
 ***REMOVED******REMOVED***response_500
 ***REMOVED*** from '../utils/responseCodes.js';
 import ROLE from '../utils/role.js';
+import cloudinary from 'cloudinary';
+import ***REMOVED*** getDataURI ***REMOVED*** from '../utils/dataURIparser.js'
 
 export async function login(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
@@ -62,7 +64,32 @@ export async function login(req, res) ***REMOVED***
 
 export async function adminRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, organizationName ***REMOVED*** = req.body;
+***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, organizationName, unrestrictedStartTime, unrestrictedEndTime ***REMOVED*** = req.body;
+***REMOVED******REMOVED******REMOVED******REMOVED***let organizationLogo = req.body?.organizationLogo;
+***REMOVED******REMOVED******REMOVED******REMOVED***let profileImg = req.body?.profileImg;
+***REMOVED******REMOVED******REMOVED******REMOVED***if (organizationLogo) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const imageUpload = await cloudinary.v2.uploader.upload((await getDataURI(organizationLogo)).content,***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***resource_type: "image",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***folder : "organization",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***format: "png",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***allowed_formats: ["png","jpg","jpeg"],
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***overwrite: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***public_id: `$***REMOVED***Date.now()***REMOVED***-organization-$***REMOVED***organizationName***REMOVED***`,
+***REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationLogo = imageUpload.secure_url;
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***if (profileImg) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const imageUpload = await cloudinary.v2.uploader.upload((await getDataURI(profileImg)).content,***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***resource_type: "image",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***folder : "profile",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***format: "png",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***allowed_formats: ["png","jpg","jpeg"],
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***overwrite: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***public_id: `$***REMOVED***Date.now()***REMOVED***-profile-$***REMOVED***name***REMOVED***`,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg = imageUpload.secure_url;
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (!email || !name || !password || !organizationName) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Feilds missing, check documentation');
@@ -82,13 +109,17 @@ export async function adminRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const data = await prisma.organization.create(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***data: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: organizationName,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(unrestrictedStartTime && ***REMOVED*** unrestrictedStartTime: unrestrictedStartTime ***REMOVED***),
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(unrestrictedEndTime && ***REMOVED*** unrestrictedEndTime: unrestrictedEndTime ***REMOVED***),
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(organizationLogo && ***REMOVED*** organizationLogo: organizationLogo ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***admin: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***create: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***user: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***create: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: name,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password: hashedPassword
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password: hashedPassword,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(profileImg && ***REMOVED*** profileImg: profileImg ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
@@ -119,6 +150,18 @@ export async function adminRegister(req, res) ***REMOVED***
 export async function peoplesRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, organizationId ***REMOVED*** = req.body;
+***REMOVED******REMOVED******REMOVED******REMOVED***let profileImg = req.body?.profileImg;
+***REMOVED******REMOVED******REMOVED******REMOVED***if (profileImg) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const imageUpload = await cloudinary.v2.uploader.upload((await getDataURI(profileImg)).content,***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***resource_type: "image",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***folder : "profile",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***format: "png",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***allowed_formats: ["png","jpg","jpeg"],
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***overwrite: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***public_id: `$***REMOVED***Date.now()***REMOVED***-profile-$***REMOVED***name***REMOVED***`,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg = imageUpload.secure_url;
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** 
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (!email || !name || !password || !organizationId) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Feilds missing, check documentation');
@@ -140,9 +183,14 @@ export async function peoplesRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: name,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password: hashedPassword,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(profileImg && ***REMOVED*** profileImg: profileImg ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***peoples: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***create: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: organizationId
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organization: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***connect: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***id: organizationId
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
@@ -200,6 +248,19 @@ export async function validate(req, res) ***REMOVED***
 export async function supervisorRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, role ***REMOVED*** = req.body;
+***REMOVED******REMOVED******REMOVED******REMOVED***let profileImg = req.body?.profileImg;
+
+***REMOVED******REMOVED******REMOVED******REMOVED***if (profileImg) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const imageUpload = await cloudinary.v2.uploader.upload((await getDataURI(profileImg)).content,***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***resource_type: "image",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***folder : "profile",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***format: "png",
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***allowed_formats: ["png","jpg","jpeg"],
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***overwrite: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***public_id: `$***REMOVED***Date.now()***REMOVED***-post-$***REMOVED***req.userId***REMOVED***`,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg = imageUpload.secure_url;
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (!email || !name || !password || !role) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Feilds missing, check documentation');
@@ -219,7 +280,8 @@ export async function supervisorRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***data: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: name,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password: hashedPassword
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password: hashedPassword,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(profileImg && ***REMOVED*** profileImg: profileImg ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***[role]: ***REMOVED***

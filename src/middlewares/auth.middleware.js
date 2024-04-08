@@ -1,4 +1,4 @@
-import ***REMOVED*** verify ***REMOVED*** from 'jsonwebtoken';
+import jwt from 'jsonwebtoken';
 import ***REMOVED*** response_401, response_500 ***REMOVED*** from '../utils/responseCodes.js';
 
 async function userAuth(req, res, next) ***REMOVED***
@@ -8,7 +8,7 @@ async function userAuth(req, res, next) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (authHeader === null || authHeader === undefined) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_401(res, 'Unauthorized');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***const payload = verify(
+***REMOVED******REMOVED******REMOVED******REMOVED***const payload = jwt.verify(
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***authHeader.split(' ')[1],
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***process.env.JWT_SECRET
 ***REMOVED******REMOVED******REMOVED******REMOVED***);

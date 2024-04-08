@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import cors from 'cors';
-import router from './src/routes/index.js';
+import router from './src/routes/index.routes.js';
 import ***REMOVED*** connDB ***REMOVED*** from './src/config/db.config.js';
 
 dotenv.config();

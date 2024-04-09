@@ -27,9 +27,9 @@
 ***REMOVED******REMOVED***"bcrypt": "^5.1.1",
 ***REMOVED******REMOVED***"cloudinary": "^2.1.0",
 ***REMOVED******REMOVED***"cors": "^2.8.5",
-***REMOVED******REMOVED***"datauri": "^4.1.0",
 ***REMOVED******REMOVED***"dotenv": "^16.4.5",
 ***REMOVED******REMOVED***"express": "^4.18.3",
-***REMOVED******REMOVED***"jsonwebtoken": "^9.0.2"
+***REMOVED******REMOVED***"jsonwebtoken": "^9.0.2",
+***REMOVED******REMOVED***"multer": "^1.4.5-lts.1"
 ***REMOVED******REMOVED***
 ***REMOVED***

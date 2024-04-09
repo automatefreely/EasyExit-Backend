@@ -56,7 +56,7 @@ export async function updateProfile(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***data: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(name && ***REMOVED***name: name***REMOVED***),
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(name && ***REMOVED*** name: name ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(password && ***REMOVED*** password: password ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(newEmail && ***REMOVED*** email: newEmail ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(organizationId && ***REMOVED***
@@ -99,7 +99,7 @@ export async function getOrganizations(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const organizations = await prisma.organization.findMany(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***contains: req.query?.name || '',
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***contains: req.query?.name || ''
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
@@ -109,7 +109,11 @@ export async function getOrganizations(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***take: 5
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 
-***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'Organizations fetched successfully', organizations);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***res,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***'Organizations fetched successfully',
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizations
+***REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Error fetching organizations', error);
 ***REMOVED******REMOVED******REMOVED***

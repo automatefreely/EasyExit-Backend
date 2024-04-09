@@ -1,6 +1,10 @@
-import ***REMOVED*** Router***REMOVED*** from "express";
+import ***REMOVED*** Router ***REMOVED*** from 'express';
 
-import ***REMOVED*** getProfile, updateProfile, deleteProfile ***REMOVED*** from "../controllers/profile.controllers.js";
+import ***REMOVED***
+***REMOVED******REMOVED***getProfile,
+***REMOVED******REMOVED***updateProfile,
+***REMOVED******REMOVED***deleteProfile
+***REMOVED*** from '../controllers/profile.controllers.js';
 
 const profileRouter = Router();
 

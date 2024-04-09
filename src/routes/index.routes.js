@@ -23,6 +23,6 @@ router.use('/manager', userAuth, isManager, managerRoutes);
 router.use('/checker', userAuth, isChecker, checkerRouter);
 router.use('/user', userAuth, isPeoples, userRouter);
 router.use('/profile', userAuth, profileRouter);
-router.get('/organization',getOrganizations);
+router.get('/organization', getOrganizations);
 
 export default router;

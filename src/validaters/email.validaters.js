@@ -2,7 +2,7 @@ import ***REMOVED*** response_400 ***REMOVED*** from '../utils/responseCodes.js'
 const emailRegex = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]***REMOVED***2,4***REMOVED***$/;
 
 export const middlewareEmailValidater = (req, res, next) => ***REMOVED***
-***REMOVED******REMOVED***email = req.body.email;
+***REMOVED******REMOVED***const email = req.body.email;
 ***REMOVED******REMOVED***if (!email) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Email is required');
 ***REMOVED******REMOVED******REMOVED***

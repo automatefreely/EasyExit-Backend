@@ -10,7 +10,7 @@ export async function requestToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, organizationId ***REMOVED*** = req.user;
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** reason, startTime, endTime ***REMOVED*** = req.body;
-***REMOVED******REMOVED******REMOVED******REMOVED***
+
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (!reason || !startTime || !endTime) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_401(res, 'Please provide all the fields');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
@@ -37,4 +37,3 @@ export async function requestToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Server Error', error);
 ***REMOVED******REMOVED******REMOVED***
 ***REMOVED***
-

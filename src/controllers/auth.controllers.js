@@ -32,18 +32,36 @@ export async function login(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password: true
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: true
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (!existingUser) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_404(res, 'User not found');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***const matchPassword = await compare(
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***existingUser.user.password
-***REMOVED******REMOVED******REMOVED******REMOVED***);
-***REMOVED******REMOVED******REMOVED******REMOVED***if (!matchPassword) ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_401(res, 'Invalid email or password');
+***REMOVED******REMOVED******REMOVED******REMOVED***if (role == ROLE.checker || role == ROLE.manager) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const hashedPassword = await hash(password, 10);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***await prisma[role].update(***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: existingUser.organizationId
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***data: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***user: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***update: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password: hashedPassword
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** else ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const matchPassword = await compare(
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***existingUser.user.password
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***if (!matchPassword) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_401(res, 'Invalid email or password');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const payLoad = ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: existingUser.email,
@@ -151,9 +169,7 @@ export async function adminRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***;
 ***REMOVED******REMOVED******REMOVED******REMOVED***const token = jwt.sign(payLoad, process.env.JWT_SECRET);
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'User has been Registered', ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: name,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***console.log(error);
@@ -222,9 +238,7 @@ export async function peoplesRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***;
 ***REMOVED******REMOVED******REMOVED******REMOVED***const token = jwt.sign(payLoad, process.env.JWT_SECRET);
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'User has been Registered', ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: name,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***console.log(error);
@@ -232,42 +246,10 @@ export async function peoplesRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED***
 ***REMOVED***
 
-export async function validate(req, res) ***REMOVED***
-***REMOVED******REMOVED***try ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, organizationId, role ***REMOVED*** = req.body;
-
-***REMOVED******REMOVED******REMOVED******REMOVED***if (!email || !role || !organizationId) ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Feilds missing, check documentation');
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-
-***REMOVED******REMOVED******REMOVED******REMOVED***if (role != ROLE.manager && role != ROLE.checker) ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Not a valid role for validation');
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-
-***REMOVED******REMOVED******REMOVED******REMOVED***const existingSupervisor = await prisma[role].findUnique(***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: organizationId,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
-***REMOVED******REMOVED******REMOVED******REMOVED***if (existingSupervisor) ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'validated for organization', ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: role
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** else ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Not registered for organization');
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***console.log(error);
-***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Error in Validating', error);
-***REMOVED******REMOVED******REMOVED***
-***REMOVED***
-
 export async function supervisorRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, role ***REMOVED*** = req.body;
-***REMOVED******REMOVED******REMOVED******REMOVED***const profileImg = req?.file
+***REMOVED******REMOVED******REMOVED******REMOVED***let profileImg = req?.file
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***? `data:$***REMOVED***req.file.mimetype***REMOVED***;base64,$***REMOVED***req.file.buffer.toString('base64')***REMOVED***`
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***: null;
 
@@ -280,7 +262,7 @@ export async function supervisorRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***format: 'png',
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***allowed_formats: ['png', 'jpg', 'jpeg'],
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***overwrite: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***public_id: `$***REMOVED***Date.now()***REMOVED***-post-$***REMOVED***req.userId***REMOVED***`
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***public_id: `$***REMOVED***Date.now()***REMOVED***-profile-$***REMOVED***req.userId***REMOVED***`
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg = imageUpload.secure_url;

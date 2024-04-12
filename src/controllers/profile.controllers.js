@@ -46,7 +46,7 @@ export async function getProfile(req, res) ***REMOVED***
 export async function updateProfile(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, role ***REMOVED*** = req.user;
-***REMOVED******REMOVED******REMOVED******REMOVED***let ***REMOVED*** name, password, organizationId, email: newEmail ***REMOVED*** = req.body;
+***REMOVED******REMOVED******REMOVED******REMOVED***let ***REMOVED*** name, password, organizationId, email: newEmail, phoneNumber ***REMOVED*** = req.body;
 ***REMOVED******REMOVED******REMOVED******REMOVED***let profileImg = req?.file
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***? `data:$***REMOVED***req.file.mimetype***REMOVED***;base64,$***REMOVED***req.file.buffer.toString('base64')***REMOVED***`
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***: null;
@@ -77,6 +77,7 @@ export async function updateProfile(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(name && ***REMOVED*** name: name ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(password && ***REMOVED*** password: password ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(newEmail && ***REMOVED*** email: newEmail ***REMOVED***),
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(phoneNumber && ***REMOVED*** phoneNumber: phoneNumber ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(profileImg && ***REMOVED*** profileImg: profileImg ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...((organizationId && role === ROLE.peoples) && ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***[role]: ***REMOVED***

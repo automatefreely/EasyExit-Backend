@@ -13,16 +13,17 @@ datasource db ***REMOVED***
 
 /// User schema
 model User ***REMOVED***
-***REMOVED***email***REMOVED******REMOVED******REMOVED***String***REMOVED*** @id
-***REMOVED***name***REMOVED******REMOVED******REMOVED*** String?
-***REMOVED***password***REMOVED*** String?
-***REMOVED***profileImg String?
-***REMOVED***createdAt***REMOVED***DateTime @default(now())
-***REMOVED***updatedAt***REMOVED***DateTime @updatedAt
-***REMOVED***admin***REMOVED******REMOVED******REMOVED***Admin?
-***REMOVED***checker***REMOVED******REMOVED***Checker?
-***REMOVED***peoples***REMOVED******REMOVED***Peoples?
-***REMOVED***manager***REMOVED******REMOVED***Manager?
+***REMOVED***email***REMOVED******REMOVED******REMOVED*** String***REMOVED*** @id
+***REMOVED***name***REMOVED******REMOVED******REMOVED******REMOVED***String?
+***REMOVED***password***REMOVED******REMOVED***String?
+***REMOVED***profileImg***REMOVED***String?
+***REMOVED***phoneNumber Int?
+***REMOVED***createdAt***REMOVED*** DateTime @default(now())
+***REMOVED***updatedAt***REMOVED*** DateTime @updatedAt
+***REMOVED***admin***REMOVED******REMOVED******REMOVED*** Admin?
+***REMOVED***checker***REMOVED******REMOVED*** Checker?
+***REMOVED***peoples***REMOVED******REMOVED*** Peoples?
+***REMOVED***manager***REMOVED******REMOVED*** Manager?
 ***REMOVED***
 
 /// Admin creates organizations, add users and assigns roles to users like people, manager, checker
@@ -107,9 +108,9 @@ enum TokenStatus ***REMOVED***
 
 /// Token schema
 model Token ***REMOVED***
-***REMOVED***token***REMOVED***String @id @default(uuid())
-***REMOVED***reason String
-
+***REMOVED***token***REMOVED******REMOVED*** String***REMOVED*** @id @default(uuid())
+***REMOVED***reason***REMOVED******REMOVED***String
+***REMOVED***heading***REMOVED*** String
 ***REMOVED***createdAt DateTime @default(now())
 ***REMOVED***updatedAt DateTime @updatedAt
 
@@ -121,8 +122,7 @@ model Token ***REMOVED***
 ***REMOVED***startTime DateTime
 ***REMOVED***endTime***REMOVED*** DateTime
 
-***REMOVED***acceptedTime***REMOVED***DateTime?
-***REMOVED***acceptedBy***REMOVED******REMOVED***Manager?***REMOVED***@relation(fields: [acceptedByUid], references: [email])
+***REMOVED***acceptedBy***REMOVED******REMOVED***Manager? @relation(fields: [acceptedByUid], references: [email])
 ***REMOVED***acceptedByUid String?
 
 ***REMOVED***rejectionReason String?

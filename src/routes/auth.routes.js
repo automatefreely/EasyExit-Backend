@@ -3,8 +3,7 @@ import ***REMOVED***
 ***REMOVED******REMOVED***adminRegister,
 ***REMOVED******REMOVED***login,
 ***REMOVED******REMOVED***peoplesRegister,
-***REMOVED******REMOVED***supervisorRegister,
-***REMOVED******REMOVED***validate
+***REMOVED******REMOVED***supervisorRegister
 ***REMOVED*** from '../controllers/auth.controllers.js';
 import upload from '../middlewares/multer.middleware.js';
 
@@ -28,7 +27,6 @@ authRouter.post(
 ***REMOVED******REMOVED***'/register/supervisor',
 ***REMOVED******REMOVED***upload.single('profileImg'),
 ***REMOVED******REMOVED***supervisorRegister
-); //Manager and checker
-authRouter.post('/validation', validate);
+);
 
 export default authRouter;

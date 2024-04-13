@@ -89,33 +89,33 @@ export async function adminRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***unrestrictedStartTime,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***unrestrictedEndTime
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** = req.body;
-***REMOVED******REMOVED******REMOVED******REMOVED***let ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationLogo: [organizationLogo],
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg: [profileImg]
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** = req.files;
+***REMOVED******REMOVED******REMOVED******REMOVED***let ***REMOVED*** organizationLogo, profileImg ***REMOVED*** = req.body;
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (organizationLogo) ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const dataURI = `data:$***REMOVED***organizationLogo.mimetype***REMOVED***;base64,$***REMOVED***organizationLogo.buffer.toString('base64')***REMOVED***`;
-
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const imageUpload = await cloudinary.v2.uploader.upload(dataURI, ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***resource_type: 'image',
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***folder: 'organization',
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***format: 'png',
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***allowed_formats: ['png', 'jpg', 'jpeg'],
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***overwrite: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***public_id: `$***REMOVED***Date.now()***REMOVED***-organization-$***REMOVED***organizationName***REMOVED***`
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const imageUpload = await cloudinary.v2.uploader.upload(
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationLogo,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***resource_type: 'image',
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***folder: 'organization',
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***format: 'png',
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***allowed_formats: ['png', 'jpg', 'jpeg'],
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***overwrite: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***public_id: `$***REMOVED***Date.now()***REMOVED***-organization-$***REMOVED***organizationName***REMOVED***`
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationLogo = imageUpload.secure_url;
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (profileImg) ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const dataURI = `data:$***REMOVED***profileImg.mimetype***REMOVED***;base64,$***REMOVED***profileImg.buffer.toString('base64')***REMOVED***`;
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const imageUpload = await cloudinary.v2.uploader.upload(dataURI, ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***resource_type: 'image',
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***folder: 'profile',
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***format: 'png',
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***allowed_formats: ['png', 'jpg', 'jpeg'],
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***overwrite: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***public_id: `$***REMOVED***Date.now()***REMOVED***-profile-$***REMOVED***name***REMOVED***`
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const imageUpload = await cloudinary.v2.uploader.upload(
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***resource_type: 'image',
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***folder: 'profile',
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***format: 'png',
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***allowed_formats: ['png', 'jpg', 'jpeg'],
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***overwrite: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***public_id: `$***REMOVED***Date.now()***REMOVED***-profile-$***REMOVED***name***REMOVED***`
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg = imageUpload.secure_url;
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 
@@ -180,9 +180,7 @@ export async function adminRegister(req, res) ***REMOVED***
 export async function peoplesRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, organizationId ***REMOVED*** = req.body;
-***REMOVED******REMOVED******REMOVED******REMOVED***let profileImg = req?.file
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***? `data:$***REMOVED***req.file.mimetype***REMOVED***;base64,$***REMOVED***req.file.buffer.toString('base64')***REMOVED***`
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***: null;
+***REMOVED******REMOVED******REMOVED******REMOVED***let profileImg = req.body.profileImg;
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (profileImg) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const imageUpload = await cloudinary.v2.uploader.upload(
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg,
@@ -249,10 +247,7 @@ export async function peoplesRegister(req, res) ***REMOVED***
 export async function supervisorRegister(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, name, password, role ***REMOVED*** = req.body;
-***REMOVED******REMOVED******REMOVED******REMOVED***let profileImg = req?.file
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***? `data:$***REMOVED***req.file.mimetype***REMOVED***;base64,$***REMOVED***req.file.buffer.toString('base64')***REMOVED***`
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***: null;
-
+***REMOVED******REMOVED******REMOVED******REMOVED***let profileImg = req.body.profileImg;
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (profileImg) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const imageUpload = await cloudinary.v2.uploader.upload(
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg,

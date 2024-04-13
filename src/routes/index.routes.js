@@ -12,12 +12,11 @@ import ***REMOVED***
 ***REMOVED******REMOVED***isPeoples
 ***REMOVED*** from '../middlewares/roleVerification.middleware.js';
 import userAuth from '../middlewares/auth.middleware.js';
-import ***REMOVED*** middlewareEmailValidater ***REMOVED*** from '../validaters/email.validaters.js';
 import ***REMOVED*** getOrganizations ***REMOVED*** from '../controllers/profile.controllers.js';
 
 const router = Router();
 
-router.use('/auth', middlewareEmailValidater, authRouter);
+router.use('/auth', authRouter);
 router.use('/admin', userAuth, isAdmin, adminRouter);
 router.use('/manager', userAuth, isManager, managerRoutes);
 router.use('/checker', userAuth, isChecker, checkerRouter);

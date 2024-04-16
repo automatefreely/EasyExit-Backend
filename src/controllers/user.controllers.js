@@ -109,8 +109,7 @@ export async function getAcceptedOutpasses(req, res) ***REMOVED***
 export async function getToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** role ***REMOVED*** = req.user;
-***REMOVED******REMOVED******REMOVED******REMOVED***const tokenId = req.params['tokenId'];
-
+***REMOVED******REMOVED******REMOVED******REMOVED***const tokenId = req.query['tokenId'];
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (role !== ROLE.peoples) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_401(
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***res,
@@ -149,8 +148,8 @@ export async function getToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***startTime: token.startTime,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***endTime: token.endTime,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: token.status,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***acceptedBy: token.acceptedBy.user.name,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***phoneNumber: token.acceptedBy.user.phoneNumber
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***acceptedBy: token.acceptedBy?.user.name,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***phoneNumber: token.acceptedBy?.user.phoneNumber
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***;
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***response_201(res, 'Token fetched successfully', formattedData);

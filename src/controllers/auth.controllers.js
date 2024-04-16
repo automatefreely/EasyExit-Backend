@@ -64,7 +64,7 @@ export async function login(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const payLoad = ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: existingUser.email,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: existingUser.user.email,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: role,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: existingUser.organizationId
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***;

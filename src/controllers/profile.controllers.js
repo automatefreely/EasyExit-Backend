@@ -5,7 +5,7 @@ import ***REMOVED***
 ***REMOVED******REMOVED***response_500
 ***REMOVED*** from '../utils/responseCodes.js';
 import ***REMOVED*** hash ***REMOVED*** from 'bcrypt';
-import ROLE from '../utils/role.js';
+import ***REMOVED*** ROLE ***REMOVED*** from '../utils/role.js';
 
 export async function getProfile(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***

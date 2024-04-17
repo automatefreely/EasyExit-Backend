@@ -9,7 +9,7 @@ import ***REMOVED***
 ***REMOVED******REMOVED***response_404,
 ***REMOVED******REMOVED***response_500
 ***REMOVED*** from '../utils/responseCodes.js';
-import ROLE from '../utils/role.js';
+import ***REMOVED*** ROLE ***REMOVED*** from '../utils/role.js';
 import cloudinary from '../config/cloudinary.config.js';
 
 export async function login(req, res) ***REMOVED***

@@ -163,6 +163,13 @@ enum NotificationStatus ***REMOVED***
 ***REMOVED***INITIATED
 ***REMOVED***
 
+enum NotificationTopic ***REMOVED***
+***REMOVED***ANNOUNCEMENT
+***REMOVED***PEOPLES
+***REMOVED***MANAGER
+***REMOVED***CHECKER
+***REMOVED***
+
 model Notifications ***REMOVED***
 ***REMOVED***notificaitonId String @id @default(uuid())
 ***REMOVED***title***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
@@ -170,7 +177,7 @@ model Notifications ***REMOVED***
 
 ***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
 ***REMOVED***organizationId String
-***REMOVED***topic***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***topic***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***NotificationTopic
 
 ***REMOVED***notificationStatus NotificationStatus @default(INITIATED)
 

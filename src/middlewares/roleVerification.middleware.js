@@ -1,5 +1,5 @@
 import ***REMOVED*** response_403, response_500 ***REMOVED*** from '../utils/responseCodes.js';
-import ROLE from '../utils/role.js';
+import ***REMOVED*** ROLE ***REMOVED*** from '../utils/role.js';
 
 export async function isAdmin(req, res, next) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***

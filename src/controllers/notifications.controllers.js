@@ -34,6 +34,8 @@ export const sendNotificationToTopic = async (req, res) => ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***const actual_topic = `$***REMOVED***organizationId***REMOVED***-$***REMOVED***topic***REMOVED***`;
+***REMOVED******REMOVED******REMOVED******REMOVED***console.log(actual_topic);
+***REMOVED******REMOVED******REMOVED******REMOVED***console.log(sendNotification())
 ***REMOVED******REMOVED******REMOVED******REMOVED***sendNotification(***REMOVED*** title, description ***REMOVED***)
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***.topic(actual_topic)
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***.then((response) => ***REMOVED***
@@ -46,12 +48,10 @@ export const sendNotificationToTopic = async (req, res) => ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***console.log('Successfully sent message:', response);
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***response_200(res, 'Success', ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***response
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***)
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***.catch((error) => ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***prisma.notifications.update(***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***prisma.notifications.update(***REMOVED*** 
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***notificaitonId: notification.notificaitonId
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
@@ -59,11 +59,9 @@ export const sendNotificationToTopic = async (req, res) => ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***notificationStatus: NotificationStatus.FAILED
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***response_500(res, 'Failed!', ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***error
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***console.log('Error sending message:', error);
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***response_200(res, 'Message initiated!');
 ***REMOVED******REMOVED******REMOVED*** catch (err) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***response_500(res, 'error sending notification!', err);
 ***REMOVED******REMOVED******REMOVED***

@@ -34,8 +34,6 @@ export const sendNotificationToTopic = async (req, res) => ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***const actual_topic = `$***REMOVED***organizationId***REMOVED***-$***REMOVED***topic***REMOVED***`;
-***REMOVED******REMOVED******REMOVED******REMOVED***console.log(actual_topic);
-***REMOVED******REMOVED******REMOVED******REMOVED***console.log(sendNotification())
 ***REMOVED******REMOVED******REMOVED******REMOVED***sendNotification(***REMOVED*** title, description ***REMOVED***)
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***.topic(actual_topic)
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***.then((response) => ***REMOVED***
@@ -61,9 +59,9 @@ export const sendNotificationToTopic = async (req, res) => ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***console.log('Error sending message:', error);
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***response_200(res, 'Message initiated!');
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'Message initiated!');
 ***REMOVED******REMOVED******REMOVED*** catch (err) ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***response_500(res, 'error sending notification!', err);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'error sending notification!', err);
 ***REMOVED******REMOVED******REMOVED***
 ***REMOVED***;
 
@@ -79,8 +77,8 @@ export const getNotification = async (req, res) => ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 
-***REMOVED******REMOVED******REMOVED******REMOVED***response_200(res, 'Notifications received successfully', notification);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'Notifications received successfully', notification);
 ***REMOVED******REMOVED******REMOVED*** catch (err) ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***response_500(res, 'error sending notification!', err);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'error sending notification!', err);
 ***REMOVED******REMOVED******REMOVED***
 ***REMOVED***;

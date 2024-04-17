@@ -13,7 +13,7 @@ import ***REMOVED***
 ***REMOVED*** from '../middlewares/roleVerification.middleware.js';
 import userAuth from '../middlewares/auth.middleware.js';
 import ***REMOVED*** getOrganizations ***REMOVED*** from '../controllers/profile.controllers.js';
-
+import notificationRouter from './notificaitons.routers.js';
 const router = Router();
 
 router.use('/auth', authRouter);
@@ -23,5 +23,6 @@ router.use('/checker', userAuth, isChecker, checkerRouter);
 router.use('/user', userAuth, isPeoples, userRouter);
 router.use('/profile', userAuth, profileRouter);
 router.get('/organization', getOrganizations);
+router.use("/notificaiton",userAuth,***REMOVED***notificationRouter);
 
 export default router;

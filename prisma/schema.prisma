@@ -24,6 +24,8 @@ model User ***REMOVED***
 ***REMOVED***checker***REMOVED******REMOVED*** Checker?
 ***REMOVED***peoples***REMOVED******REMOVED*** Peoples?
 ***REMOVED***manager***REMOVED******REMOVED*** Manager?
+
+***REMOVED***notificationSent Notifications[]
 ***REMOVED***
 
 /// Admin creates organizations, add users and assigns roles to users like people, manager, checker
@@ -76,6 +78,8 @@ model Organization ***REMOVED***
 ***REMOVED***unrestrictedStartTime DateTime***REMOVED***@default(dbgenerated("043000")) @db.Time()
 ***REMOVED***unrestrictedEndTime***REMOVED*** DateTime***REMOVED***@default(dbgenerated("123000")) @db.Time()
 ***REMOVED***organizationLogo***REMOVED******REMOVED******REMOVED***String?
+
+***REMOVED***notifications Notifications[]
 
 ***REMOVED***@@index([id, name])
 ***REMOVED***
@@ -151,4 +155,29 @@ model lateEntry ***REMOVED***
 ***REMOVED***createdAt DateTime @default(now())
 
 ***REMOVED***@@index([token])
+***REMOVED***
+
+enum NotificationStatus ***REMOVED***
+***REMOVED***SUCCESS
+***REMOVED***FAILED
+***REMOVED***INITIATED
+***REMOVED***
+
+model Notifications ***REMOVED***
+***REMOVED***notificaitonId String @id @default(uuid())
+***REMOVED***title***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+***REMOVED***description***REMOVED******REMOVED***String
+
+***REMOVED***organization***REMOVED*** Organization @relation(fields: [organizationId], references: [id])
+***REMOVED***organizationId String
+***REMOVED***topic***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***String
+
+***REMOVED***notificationStatus NotificationStatus @default(INITIATED)
+
+***REMOVED***sender***REMOVED******REMOVED******REMOVED***User***REMOVED******REMOVED*** @relation(fields: [senderEmail], references: [email])
+***REMOVED***senderEmail String
+***REMOVED***createdAt***REMOVED*** DateTime @default(now())
+
+***REMOVED***@@index([organizationId])
+***REMOVED***@@index([senderEmail])
 ***REMOVED***

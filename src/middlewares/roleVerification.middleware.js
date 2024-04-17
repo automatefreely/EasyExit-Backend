@@ -27,6 +27,19 @@ export async function isManager(req, res, next) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED***
 ***REMOVED***
 
+export async function isSuperUser(req, res, next) ***REMOVED***
+***REMOVED******REMOVED***try ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***if (req.user?.role == ROLE.manager || req.user?.role == ROLE.admin) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***next();
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** else ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_403(res, 'Manager access required');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***console.error(error);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Error while checking manager', error);
+***REMOVED******REMOVED******REMOVED***
+***REMOVED***
+
 export async function isChecker(req, res, next) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (req.user?.role == ROLE.checker) ***REMOVED***

@@ -2,10 +2,11 @@ import ***REMOVED*** TokenStatus ***REMOVED*** from '@prisma/client';
 import prisma from '../config/db.config.js';
 
 import ***REMOVED***
-***REMOVED******REMOVED***response_201,
+***REMOVED******REMOVED***response_200,
 ***REMOVED******REMOVED***response_400,
 ***REMOVED******REMOVED***response_500,
-***REMOVED******REMOVED***response_404
+***REMOVED******REMOVED***response_404,
+***REMOVED******REMOVED***response_204
 ***REMOVED*** from '../utils/responseCodes.js';
 
 export async function checkToken(req, res) ***REMOVED***
@@ -23,7 +24,8 @@ export async function checkToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***startTime: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***endTime: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: true
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***exitTime: true
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 
@@ -56,7 +58,7 @@ export async function checkToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_201(res, 'token verified successfully');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_204(res, 'token verified successfully');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** else ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***await prisma.token.update(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
@@ -71,7 +73,7 @@ export async function checkToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***: TokenStatus.EXPIRED
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_201(res, 'token verified successfully');
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_204(res, 'token verified successfully');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***console.error(error);
@@ -82,24 +84,40 @@ export async function checkToken(req, res) ***REMOVED***
 export async function getCheckedTokens(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, organizationId ***REMOVED*** = req.user;
+***REMOVED******REMOVED******REMOVED******REMOVED***const search = req.query?.search;
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***const tokens = await prisma.token.findMany(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: organizationId,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***checkedByUid: email
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***checkedByUid: email,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(search && ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***OR: [
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***heading: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***search: search
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***reason: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***search: search
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token: search
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***]
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***)
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***reason: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***startTime: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***endTime: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***heading: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***exitTime: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***returnedTime: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: true
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 
-***REMOVED******REMOVED******REMOVED******REMOVED***return response_201(res, 'Tokens checked by you', tokens);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'Tokens checked by you', tokens);
 ***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***console.error(error);
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Server Error', error);

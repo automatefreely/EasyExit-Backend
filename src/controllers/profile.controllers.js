@@ -23,7 +23,9 @@ export async function getProfile(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: true
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***phoneNumber: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 
@@ -34,7 +36,9 @@ export async function getProfile(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***unrestrictedStartTime:
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profile[role].organization.unrestrictedStartTime,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***unrestrictedEndTime: profile[role].organization.unrestrictedEndTime,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: role
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role: role,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***phoneNumber: profile.phoneNumber,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg: profile.profileImg
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***;
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'Profile fetched successfully', formattedData);
@@ -49,13 +53,8 @@ export async function updateProfile(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***let ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***password,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: newEmail,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***phoneNumber
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** = req.body;
-***REMOVED******REMOVED******REMOVED******REMOVED***let profileImg = req?.file
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***? `data:$***REMOVED***req.file.mimetype***REMOVED***;base64,$***REMOVED***req.file.buffer.toString('base64')***REMOVED***`
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***: null;
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (profileImg) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const imageUpload = await cloudinary.v2.uploader.upload(
@@ -81,22 +80,9 @@ export async function updateProfile(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***data: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(name && ***REMOVED*** name: name ***REMOVED***),
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(password && ***REMOVED*** password: password ***REMOVED***),
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(newEmail && ***REMOVED*** email: newEmail ***REMOVED***),
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(phoneNumber && ***REMOVED*** phoneNumber: phoneNumber ***REMOVED***),
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(password && ***REMOVED*** password: password ***REMOVED***),***REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(phoneNumber && ***REMOVED*** phoneNumber: Number(phoneNumber) ***REMOVED***),
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(profileImg && ***REMOVED*** profileImg: profileImg ***REMOVED***),
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***...(organizationId &&
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***role === ROLE.peoples && ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***[role]: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***update: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organization: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***connect: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***id: organizationId
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***)
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 

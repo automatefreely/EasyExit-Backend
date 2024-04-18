@@ -12,7 +12,7 @@ const managerRouter = Router();
 managerRouter.get('/alltokens', getAllTokens);
 managerRouter.get('/tokens/accepted', getAcceptedToken);
 managerRouter.get('/tokens/rejected', getRejectedToken);
-managerRouter.post('/token/accept', acceptToken);
-managerRouter.post('/token/reject', rejectToken);
+managerRouter.patch('/token/accept', acceptToken);
+managerRouter.patch('/token/reject', rejectToken);
 
 export default managerRouter;

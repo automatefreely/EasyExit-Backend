@@ -13,7 +13,7 @@ import ***REMOVED***
 ***REMOVED*** from '../middlewares/roleVerification.middleware.js';
 import userAuth from '../middlewares/auth.middleware.js';
 import ***REMOVED*** getOrganizations ***REMOVED*** from '../controllers/profile.controllers.js';
-import notificationRouter from './notificaitons.routers.js';
+import notificationRouter from './notificaitons.routes.js';
 const router = Router();
 
 router.use('/auth', authRouter);

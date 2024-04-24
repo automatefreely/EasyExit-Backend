@@ -7,18 +7,18 @@ import ***REMOVED***
 import prisma from '../config/db.config.js';
 
 import sendNotification from '../utils/sendFirebaseNotification.js';
-import ***REMOVED*** TOPIC ***REMOVED*** from '../utils/role.js';
+// import ***REMOVED*** TOPIC ***REMOVED*** from '../utils/role.js';
 export const sendNotificationToTopic = async (req, res) => ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** title, description, topic ***REMOVED*** = req.body;
-***REMOVED******REMOVED******REMOVED******REMOVED***const enumTopic = TOPIC?.[topic];
+***REMOVED******REMOVED******REMOVED******REMOVED***// const enumTopic = TOPIC?.[topic];
+***REMOVED******REMOVED******REMOVED******REMOVED***const enumTopic = topic;
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (!title || !description || !topic) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Provide required parameter!');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** else if (!enumTopic) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_400(res, 'Invalid topic!');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** email, organizationId ***REMOVED*** = req.user;
-***REMOVED******REMOVED******REMOVED******REMOVED***
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***const notification = await prisma.notifications.create(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***data: ***REMOVED***
@@ -40,8 +40,8 @@ export const sendNotificationToTopic = async (req, res) => ***REMOVED***
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***sendNotification(***REMOVED*** title, description ***REMOVED***)
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***.topic(`$***REMOVED***organizationId***REMOVED***-$***REMOVED***topic***REMOVED***`)
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***.then((response) => ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***prisma.notifications.update(***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***.then(async (response) => ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***await prisma.notifications.update(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***notificaitonId: notification.notificaitonId
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
@@ -50,10 +50,9 @@ export const sendNotificationToTopic = async (req, res) => ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***console.log('Successfully sent message:', response);
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***)
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***.catch((error) => ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***prisma.notifications.update(***REMOVED*** 
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***.catch(async (error) => ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***await prisma.notifications.update(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***notificaitonId: notification.notificaitonId
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
@@ -81,7 +80,11 @@ export const getNotification = async (req, res) => ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 
-***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'Notifications received successfully', notification);
+***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***res,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***'Notifications received successfully',
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***notification
+***REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED*** catch (err) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'error sending notification!', err);
 ***REMOVED******REMOVED******REMOVED***

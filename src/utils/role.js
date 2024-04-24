@@ -1,4 +1,4 @@
-import ***REMOVED*** NotificationTopic ***REMOVED*** from '@prisma/client';
+// import ***REMOVED*** NotificationTopic ***REMOVED*** from '@prisma/client';
 
 export const ROLE = ***REMOVED***
 ***REMOVED******REMOVED***peoples: 'peoples',
@@ -7,9 +7,9 @@ export const ROLE = ***REMOVED***
 ***REMOVED******REMOVED***checker: 'checker'
 ***REMOVED***;
 
-export const TOPIC = ***REMOVED***
-***REMOVED******REMOVED***announcement: NotificationTopic.ANNOUNCEMENT,
-***REMOVED******REMOVED***peoples: NotificationTopic.PEOPLES,
-***REMOVED******REMOVED***checker: NotificationTopic.CHECKER,
-***REMOVED******REMOVED***manager: NotificationTopic.MANAGER
-***REMOVED***;
+// export const TOPIC = ***REMOVED***
+//***REMOVED******REMOVED*** announcement: NotificationTopic.ANNOUNCEMENT,
+//***REMOVED******REMOVED*** peoples: NotificationTopic.PEOPLES,
+//***REMOVED******REMOVED*** checker: NotificationTopic.CHECKER,
+//***REMOVED******REMOVED*** manager: NotificationTopic.MANAGER
+// ***REMOVED***;

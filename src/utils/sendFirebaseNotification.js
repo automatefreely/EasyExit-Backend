@@ -22,6 +22,7 @@ const sendNotification = (data) => ***REMOVED***
 
 ***REMOVED******REMOVED***const topic = (topic_name) => ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***message.topic = topic_name;
+***REMOVED******REMOVED******REMOVED******REMOVED***console.log(message)
 ***REMOVED******REMOVED******REMOVED******REMOVED***return sendMessage();
 ***REMOVED******REMOVED******REMOVED***;
 

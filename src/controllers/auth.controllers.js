@@ -71,7 +71,8 @@ export async function login(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const token = jwt.sign(payLoad, process.env.JWT_SECRET);
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'User has been logged In', ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: existingUser.name
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: existingUser.user.name,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: existingUser.organizationId
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***console.error(error);

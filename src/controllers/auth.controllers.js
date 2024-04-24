@@ -39,7 +39,7 @@ export async function login(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***if (!existingUser) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return response_404(res, 'User not found');
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***if (role == ROLE.checker || role == ROLE.manager) ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED***if ((role == ROLE.checker || role == ROLE.manager) && !existingUser.user.password) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***const hashedPassword = await hash(password, 10);
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***await prisma[role].update(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***

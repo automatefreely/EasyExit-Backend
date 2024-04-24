@@ -116,7 +116,7 @@ export async function getCheckedTokens(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: true
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
-
+***REMOVED******REMOVED******REMOVED******REMOVED***console.log(tokens);
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'Tokens checked by you', tokens);
 ***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***console.error(error);

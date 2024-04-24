@@ -33,7 +33,7 @@ export async function acceptToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const updatedToken = await prisma.token.update(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***id: token,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token: token,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: TokenStatus.REQUESTED,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: organizationId
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
@@ -43,8 +43,7 @@ export async function acceptToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***connect: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***acceptedTime: new Date()
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_204(res, 'Token accepted successfully');
@@ -85,57 +84,12 @@ export async function rejectToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***connect: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***acceptedTime: new Date()
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_204(res, 'Token rejected successfully');
 ***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Error while rejecting token', error);
-***REMOVED******REMOVED******REMOVED***
-***REMOVED***
-
-export async function getAllTokens(req, res) ***REMOVED***
-***REMOVED******REMOVED***try ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** organizationId ***REMOVED*** = req.user;
-***REMOVED******REMOVED******REMOVED******REMOVED***const tokens = await prisma.token.findMany(***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: organizationId
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***reason: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***issuedBy: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***user: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: true
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***createdAt: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***updatedAt: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***startTime: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***endTime: true
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
-***REMOVED******REMOVED******REMOVED******REMOVED***const formattedData = tokens.map((token) => (***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token: token.token,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***reason: token.reason,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: token.status,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***createdAt: token.createdAt,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***updatedAt: token.updatedAt,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***startTime: token.startTime,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***endTime: token.endTime,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: token.issuedBy.user.name,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: token.issuedBy.user.email
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***));
-***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'Tokens fetched successfully', formattedData);
-***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***return response_500(res, 'Error while fetching tokens', error);
 ***REMOVED******REMOVED******REMOVED***
 ***REMOVED***
 
@@ -170,6 +124,7 @@ export async function getPendingToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED***const formattedData = tokens.map((token) => (***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token: token.token,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***heading: token.heading,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***reason: token.reason,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: token.status,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***startTime: token.startTime,
@@ -177,7 +132,7 @@ export async function getPendingToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: token.issuedBy.user.name,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: token.issuedBy.user.email,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***phoneNumber: token.issuedBy.user.phoneNumber,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg: token.issuedBy.user.profileImg,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***profileImg: token.issuedBy.user.profileImg
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***));
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(res, 'Tokens fetched successfully', formattedData);
 ***REMOVED******REMOVED******REMOVED*** catch (error) ***REMOVED***
@@ -193,25 +148,25 @@ export async function getAcceptedToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: organizationId,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: TokenStatus.ISSUED,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***acceptedBy: ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email:email
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: email
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***reason: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***heading: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***issuedBy: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***user: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: true
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***phoneNumber: true
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***createdAt: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***updatedAt: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***startTime: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***endTime: true
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
@@ -219,13 +174,13 @@ export async function getAcceptedToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const formattedData = tokens.map((token) => (***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token: token.token,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***reason: token.reason,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***heading: token.heading,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: token.status,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***createdAt: token.createdAt,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***updatedAt: token.updatedAt,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***startTime: token.startTime,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***endTime: token.endTime,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: token.issuedBy.user.name,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: token.issuedBy.user.email
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: token.issuedBy.user.email,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***phoneNumber: token.issuedBy.user.phoneNumber
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***));
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***res,
@@ -239,7 +194,7 @@ export async function getAcceptedToken(req, res) ***REMOVED***
 
 export async function getRejectedToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** organizationId ***REMOVED*** = req.user;
+***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** organizationId, email ***REMOVED*** = req.user;
 ***REMOVED******REMOVED******REMOVED******REMOVED***const tokens = await prisma.token.findMany(***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***organizationId: organizationId,
@@ -251,25 +206,26 @@ export async function getRejectedToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***reason: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***heading: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***issuedBy: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***user: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***select: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: true
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: true,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***phoneNumber: true
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***createdAt: true,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***updatedAt: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***startTime: true,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***endTime: true
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***);
 ***REMOVED******REMOVED******REMOVED******REMOVED***const formattedData = tokens.map((token) => (***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***token: token.token,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***heading: token.heading,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***reason: token.reason,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***status: token.status,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***createdAt: token.createdAt,
@@ -277,7 +233,8 @@ export async function getRejectedToken(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***startTime: token.startTime,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***endTime: token.endTime,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***name: token.issuedBy.user.name,
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: token.issuedBy.user.email
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***email: token.issuedBy.user.email,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***phoneNumber: token.issuedBy.user.phoneNumber
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***));
 ***REMOVED******REMOVED******REMOVED******REMOVED***return response_200(
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***res,
@@ -322,8 +279,7 @@ export async function tokenStats(req, res) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***newForm.denied += curr._count.token;
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** else if (curr.status === TokenStatus.REQUESTED) ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***newForm.pending += curr._count.token;
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***else newForm.approved += curr._count.token
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** else newForm.approved += curr._count.token;
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***return newForm;
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** approved: 0, denied: 0, pending: 0 ***REMOVED***

@@ -71,10 +71,22 @@ export const sendNotificationToTopic = async (req, res) => ***REMOVED***
 export const getNotification = async (req, res) => ***REMOVED***
 ***REMOVED******REMOVED***try ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** topic ***REMOVED*** = req.body;
-***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** organizationId ***REMOVED*** = req.user;
+***REMOVED******REMOVED******REMOVED******REMOVED***const ***REMOVED*** organizationId, email ***REMOVED*** = req.user;
 
 ***REMOVED******REMOVED******REMOVED******REMOVED***const notification = await prisma.notifications.findMany(***REMOVED***
-***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED*** topic, organizationId ***REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***// where: ***REMOVED*** topic, organizationId ***REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***where: ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***AND: [
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** topic ***REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** organizationId ***REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***OR: [
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** senderEmail: email ***REMOVED***,
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED*** notificationStatus: NotificationStatus.SUCCESS ***REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***]
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***]
+***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***,
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***orderBy: ***REMOVED***
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***createdAt: 'desc'
 ***REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED******REMOVED***
